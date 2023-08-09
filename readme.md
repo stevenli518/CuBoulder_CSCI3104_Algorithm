@@ -1,9 +1,9 @@
 # CUBOULDER_CSCI3104_Algorithm
-- All my past work for CSCI 3104 Algorithm
+- All my past work from CSCI 3104 Algorithm
 
 # Homework
 0. [Homework0 - Latex Intro](/Homework0/)
-1. [Homework1 - Prrof by Induction, Greedy Algorithms, Exchange Arguments, and Huffman coding](/Homework1/)
+1. [Homework1 - Proof by Induction, Greedy Algorithms, Exchange Arguments, and Huffman coding](/Homework1/)
 2. [Homework2 - BFS, DFS and Dijkstra's Algorithm](/Homework2/)
 3. [Homework3 - MST, Kruskal's and Prim's Algorithm](/Homework3/)
 4. [Homework4 - Asymptotics and Analyzing Code](/Homework4/)
