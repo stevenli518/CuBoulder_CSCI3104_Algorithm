@@ -1,0 +1,205 @@
+ \documentclass[11pt]{article} 
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[margin=0.5in]{geometry}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage[usenames,dvipsnames]{xcolor}
+\usepackage{graphicx}
+\usepackage[siunitx]{circuitikz}
+\usepackage{tikz}
+\usepackage{tkz-berge}
+\usetikzlibrary{positioning, automata, backgrounds}
+\usepackage[colorinlistoftodos, color=orange!50]{todonotes}
+\usepackage{hyperref}
+\usepackage[numbers, square]{natbib}
+\usepackage{fancybox}
+\usepackage{epsfig}
+\usepackage{soul}
+\usepackage[framemethod=tikz]{mdframed}
+\usepackage[shortlabels]{enumitem}
+\usepackage[version=4]{mhchem}
+\usepackage{multicol}
+\usepackage{forest}
+\usepackage{mathtools}
+\usepackage{comment}
+\usepackage{enumitem}
+\usepackage[utf8]{inputenc}
+\usepackage{listings}
+\usepackage{color}
+\usepackage[numbers]{natbib}
+\usepackage{subfiles}
+\usepackage{tkz-berge}
+\usepackage{algorithm}
+\usepackage[noend]{algpseudocode}
+
+
+\newtheorem{prop}{Proposition}[section]
+\newtheorem{thm}{Theorem}[section]
+\newtheorem{lemma}{Lemma}[section]
+\newtheorem{cor}{Corollary}[prop]
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}
+
+\theoremstyle{definition}
+\newtheorem{required}{Problem}
+
+\theoremstyle{definition}
+\newtheorem{ex}{Example}
+
+\newcommand{\interval}[4]{\draw (#2, #1) -- (#3, #1); % Usage: \interval{height}{start}{end}{label}
+\draw (#2, #1-0.11) -- (#2, #1+0.11); % draw left whisker
+\draw (#3, #1-0.11) -- (#3, #1+0.11); % draw right whisker
+\node[] at (#2-0.25, #1) {#4};
+}
+
+
+\setlength{\marginparwidth}{3.4cm}
+%#########################################################
+
+%To use symbols for footnotes
+\renewcommand*{\thefootnote}{\fnsymbol{footnote}}
+%To change footnotes back to numbers uncomment the following line
+%\renewcommand*{\thefootnote}{\arabic{footnote}}
+
+% Enable this command to adjust line spacing for inline math equations.
+% \everymath{\displaystyle}
+
+% _______ _____ _______ _      ______ 
+%|__   __|_   _|__   __| |    |  ____|
+%   | |    | |    | |  | |    | |__   
+%   | |    | |    | |  | |    |  __|  
+%   | |   _| |_   | |  | |____| |____ 
+%   |_|  |_____|  |_|  |______|______|
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\title{
+\normalfont \normalsize 
+\textsc{CSCI 3104 Fall 2021 \\ 
+Instructors: Profs. Chen and Layer} \\
+[10pt] 
+\rule{\linewidth}{0.5pt} \\[6pt] 
+\huge Problem Set 9 \\
+\rule{\linewidth}{2pt}  \\[10pt]
+}
+%\author{Your Name}
+\date{}
+
+\begin{document}
+\definecolor {processblue}{cmyk}{0.96,0,0,0}
+\maketitle
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%FILL IN YOUR NAME%%%%%%%
+%%%%%%%%%%AND STUDENT ID%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+\noindent
+Due Date \dotfill April 8 \\
+Name \dotfill \textbf{Chengming Li} \\
+Student ID \dotfill \textbf{109251991} \\
+Collaborators \dotfill \textbf{N/A}
+
+\tableofcontents
+
+\section{Instructions}
+ \begin{itemize}
+	\item The solutions \textbf{must be typed}, using proper mathematical notation. We cannot accept hand-written solutions. \href{http://ece.uprm.edu/~caceros/latex/introduction.pdf}{Here's a short intro to \LaTeX.}
+	\item You should submit your work through the \textbf{class Canvas page} only. Please submit one PDF file, compiled using this \LaTeX \ template.
+	\item You may not need a full page for your solutions; pagebreaks are there to help Gradescope automatically find where each problem is. Even if you do not attempt every problem, please submit this document with no fewer pages than the blank template (or Gradescope has issues with it).
+
+	\item You are welcome and encouraged to collaborate with your classmates, as well as consult outside resources. You must \textbf{cite your sources in this document.} \textbf{Copying from any source is an Honor Code violation. Furthermore, all submissions must be in your own words and reflect your understanding of the material.} If there is any confusion about this policy, it is your responsibility to clarify before the due date. 
+
+	\item Posting to \textbf{any} service including, but not limited to Chegg, Reddit, StackExchange, etc., for help on an assignment is a violation of the Honor Code.
+\end{itemize}
+
+
+\newpage
+\section{Standard 24- Hash Tables}
+
+\begin{required} \label{Hash3}
+Hash tables and balanced binary trees can be both be used to implement a dictionary data structure, which supports insertion, deletion, and lookup operations. In balanced binary trees containing $n$ elements, the run time of all operations is $\Theta(\log n)$.  \\
+
+\noindent For each of the following three scenarios, compare the average-case performance of a dictionary implemented with a hash table (which resolves collisions with chaining using doubly-linked lists) to a dictionary implemented with a balanced binary tree.
+	
+\begin{enumerate}[label=(\alph*)]
+\item A hash table with hash function $h_1(x)=1$ for all keys $x$.
+
+\begin{proof}[Answer]
+\textbf{Insertion:}$\Theta(1)$.\\
+\textbf{Deletion and Lookup:}$\Theta( n)$\\
+Since the hash function will generate the same output as 1, everything will store in the same bucket, or same location. And we solve the hash table using chaining, so all elements are stored in the same linked list. Thus, the deletion and lookup time is $\Theta( n)$ given n element. And we always insert the element at the head of linked list, the insertion is $\Theta(1)$.
+\begin{align*}
+\lim _{n\to \infty }\left(\frac{log_2n}{n}\right)&=0
+\end{align*}
+So, the Deletion and Lookup run time of this hash table under  $h_1(x)=1$ is worse than a dictionary implemented with a balanced binary tree. And $\Theta(\log n) \in O(n)$\\
+But, the insertion time  $\Theta(1)$ is better than a dictionary implemented with a balanced binary tree.
+\end{proof}
+
+
+\vskip 15pt
+\item A hash table with a hash function $h_2$ that satisfies the Simple Uniform Hashing Assumption, and where the number $m$ of buckets is $\Theta(n)$.
+\begin{proof}[Answer]
+\textbf{The load factor is $\frac{n}{m} = n/n = 1$} due to the number m of buckets is $\Theta(n)$\\
+Under the Simple Uniform Hashing Assumption:\\
+\textbf{Insertion: $\Theta(1)$}, because we pre pend the current element to our linked list at every collision.\\
+\textbf{Deletion and Lookup: $\Theta(1+\alpha = 1+1)=\Theta(1) $}
+
+\begin{align*}
+\lim _{n\to \infty }\left(\frac{log_2n}{2}\right)&=\infty 
+\end{align*}
+So, the Deletion and Lookup run time of this hash table under  $h_2$ is better than a dictionary implemented with a balanced binary tree. And $\Theta(1) \in O(\log n)$\\
+And, the insertion time is better than a dictionary implemented with a balanced binary tree.$\Theta(1) \in O(\log n)$\\
+\end{proof}
+
+
+\vskip 15pt	
+\item A hash table with a hash function $h_3$ that satisfies the Simple Uniform Hashing Assumption, and where the number $m$ of buckets is $\Theta(n^{3/4})$.
+
+\begin{proof}[Answer]
+\textbf{The load factor is $\frac{n}{m} = n/n^{3/4} = n^{1/4}$} due to the number m of buckets is $\Theta(n^{3/4})$\\
+Under the Simple Uniform Hashing Assumption:\\
+\textbf{Insertion: $\Theta(1)$}, because we pre pend the current element to our linked list at every collision.\\
+\textbf{Deletion and Lookup: $\Theta(1+\alpha = 1+n^{1/4})$}
+
+\begin{align*}
+\lim _{n\to \infty }\left(\frac{log_2n}{1+n^{\frac{1}{4}}}\right)&=\frac{\frac{1}{nln2}}{\frac{1}{4}n^{-\frac{3}{4}}}\\
+&=\lim _{n\to \infty }\frac{4n^{-\frac{1}{4}}}{ln2}\\
+&=\lim _{n\to \infty }\frac{4}{n^{\frac{1}{4}}ln2}\\
+&= 0
+\end{align*}
+So, the run time of this hash table under  $h_3$ is worse than a dictionary implemented with a balanced binary tree. And $\Theta(\log n) \in O(1+n^{1/4})$\\
+But, the insertion time  $\Theta(1)$ is better than a dictionary implemented with a balanced binary tree.
+\end{proof}
+
+\end{enumerate}
+\end{required}
+
+
+
+\newpage
+\section{Standard 25- Doubling Lists and Amortized Analysis}
+
+\begin{required} \label{Hash2}
+Consider a hash table $A$ that holds data from a fixed, finite universe $U$. If the hash table starts empty with $b=10$ buckets and doubles its number of buckets whenever the load factor exceeds $\frac{1}{2}$, what is the load factor after adding $n = 36$ elements to the hash table?
+\end{required}
+
+\begin{proof}[Answer]
+\begin{itemize}
+\item Since it's asking that the load factor cannot exceed $1/2$, which means whenever the n elements are greater than half of current m. i.e. n$>$m/2, we double its number of buckets.
+\item Now, the buckets, or m, is 10. Thus, the bucket will double its size when n $>$ 5, i.e. n=6. Assuming we add the sixth element, we double the size of buckets to 20.
+\item Now, the buckets, or m, is 20. Thus, the bucket will double its size when n $>$ 10, i.e. n=11. Assuming we add the 11th element, we double the size of buckets to 40.
+\item Now, the buckets, or m, is 40. Thus, the bucket will double its size when n $>$ 20, i.e. n=21. Assuming we add the 21th element, we double the size of buckets to 80.
+\item Now, the buckets, or m, is 80. Thus, the bucket will double its size when n $>$ 40, i.e. n=41. We can compute the load factor after adding n = 36 elements to the hash table, because 36 $<$41.
+\end{itemize}
+\textbf{\\The load factor $n/m = 36/80 = 0.45$ }
+\end{proof}
+
+\end{document} % NOTHING AFTER THIS LINE IS PART OF THE DOCUMENT
+
+
+
